@@ -1,0 +1,30 @@
+---
+# tasks file for configure_SG
+ - name: Create and configure Security Group
+   ec2_group:
+    name: "{{ sec_grp_name }}"
+    aws_access_key: AKIAJQGJBGCTWRCMXY3Q
+    aws_secret_key: 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
+    region: us-west-2
+    description: Group for enabling ssh, http, https for elb and as
+    rules:
+     - proto: tcp
+       from_port: 22
+       to_port: 22
+       cidr_ip: 0.0.0.0/0
+     - proto: tcp
+       from_port: 80
+       to_port: 80
+       cidr_ip: 0.0.0.0/0
+     - proto: tcp
+       from_port: 443
+       to_port: 443
+       cidr_ip: 0.0.0.0/0
+    rules_egress:
+     - proto: all
+       cidr_ip: 0.0.0.0/0
+   register: ec2_sec_grp
+ - name: Display the security group created
+   shell: echo "{{ item }}" > ~/sec_grp_id
+   with_items: 
+    - "{{ ec2_sec_grp.items }}"

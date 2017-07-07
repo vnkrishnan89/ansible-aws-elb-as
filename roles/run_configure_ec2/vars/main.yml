@@ -1,0 +1,3 @@
+---
+# vars file for run_configure_ec2
+sec_grp_name: ELB_AS_SG

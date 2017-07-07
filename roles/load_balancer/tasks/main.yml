@@ -1,0 +1,29 @@
+---
+# tasks file for load_balancer
+ - name: Create a load balancer between ec2 instances
+   ec2_elb_lb:
+     name: "{{ load_balancer }}"
+     aws_access_key: AKIAJQGJBGCTWRCMXY3Q
+     aws_secret_key: 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
+     region: us-west-2
+     security_group_ids: sg-db69a0a1
+     subnets: subnet-9eb996c6
+     state: present
+     connection_draining_timeout: 60 
+     listeners:
+       - protocol: http
+         load_balancer_port: 80
+         instance_port: 80
+     health_check:
+         ping_protocol: http
+         ping_port: 80
+         ping_path: "/index.html"
+         response_timeout: 3
+         interval: 5
+         healthy_threshold: 3
+         unhealthy_threshold: 2
+   tags: load_balancer
+   register: elb_details
+ 
+ - name: Display load balancer details
+   shell: echo "{{ elb_details }}" > ~/elb_details; cat ~/elb_details

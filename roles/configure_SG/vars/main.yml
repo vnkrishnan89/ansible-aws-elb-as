@@ -1,0 +1,3 @@
+---
+# vars file for configure_SG
+sec_grp_name: ELB_AS_SG

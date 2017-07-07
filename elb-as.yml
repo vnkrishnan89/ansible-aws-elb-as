@@ -1,0 +1,8 @@
+---
+ - name: Auto-scaling, Load-balancing 
+   hosts: localhost
+   roles:
+
+    - configure_SG
+#    - load_balancer
+    - run_configure_ec2
